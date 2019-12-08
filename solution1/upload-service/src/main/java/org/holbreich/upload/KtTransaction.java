@@ -1,14 +1,18 @@
-package org.holbreich;
+package org.holbreich.upload;
 
-public class Transaction {
-	//transaction_id,description,value,date
-	
+/**
+ * Kreditech fictitious Transaction.
+ * 
+ * @author aho
+ */
+public class KtTransaction {
+
 	private String transaction_id;
 	private String description;
 	private String value;
 	private String date;
-	
-	public Transaction(String transaction_id, String description, String value, String date) {
+
+	public KtTransaction(String transaction_id, String description, String value, String date) {
 		super();
 		this.transaction_id = transaction_id;
 		this.description = description;
@@ -37,7 +41,5 @@ public class Transaction {
 		return "Transaction [transaction_id=" + transaction_id + ", description=" + description + ", value=" + value
 				+ ", date=" + date + "]";
 	}
-	
-	
 
 }
