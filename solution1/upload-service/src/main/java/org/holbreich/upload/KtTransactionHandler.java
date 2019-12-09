@@ -6,6 +6,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
+/**
+ * KtTransactionHandler is responsible for the management of the Transaction.
+ * This implementation simply puts the Transaction to the Messaging Middlware.  
+ * @author aho
+ *
+ */
 @Service
 public class KtTransactionHandler {
 
@@ -29,7 +35,7 @@ public class KtTransactionHandler {
 	 * @param transaction
 	 * @throws Exception
 	 */
-	public void handleKtTransaction(KtTransaction transaction) throws Exception {
+	public void handleSingleTransaction(KtTransaction transaction) throws Exception {
 		sender.sendMessage(conversionService.convert(transaction, String.class), TOPIC);
 		countAndLog();
 	}
