@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.concurrent.TimeoutException;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
@@ -21,18 +20,16 @@ public class NatsConnectionHandler {
 
 	private transient Connection connection;
 
-	protected synchronized Connection getConnection() throws Exception {
+	public  synchronized Connection getConnection() throws Exception {
 		if (connection == null) {
 			connection = createConnection();
 		}
 		return connection;
 	}
 
-	@PostConstruct
-	protected Connection createConnection() throws IOException, Exception {
-		final Connection newConnection = Nats.connect();
-		LOG.info("A NATS Connection {} has been created", newConnection);
-		return newConnection;
+	private synchronized Connection createConnection() throws IOException, Exception {
+		LOG.info("A NATS Connection has been created");
+		return Nats.connect();
 	}
 
 	@PreDestroy

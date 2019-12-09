@@ -9,10 +9,10 @@ public class KtTransaction {
 
 	private String transaction_id;
 	private String description;
-	private String value;
+	private double value;
 	private String date;
 
-	public KtTransaction(String transaction_id, String description, String value, String date) {
+	public KtTransaction(String transaction_id, String description, double value, String date) {
 		super();
 		this.transaction_id = transaction_id;
 		this.description = description;
@@ -28,7 +28,7 @@ public class KtTransaction {
 		return description;
 	}
 
-	public String getValue() {
+	public double getValue() {
 		return value;
 	}
 
