@@ -1,10 +1,7 @@
 package org.holbreich.upload;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 
-import org.simpleflatmapper.csv.CsvParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +25,7 @@ public class FileUploadRestApi {
 	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
 
 		try {
-			Reader reader = new InputStreamReader(file.getInputStream());
-			CsvParser.mapTo(KtTransaction.class).forEach(reader, t -> transactionHandler.handleSingleTransaction(t));
+			transactionHandler.parseAndHandleAllTransactions(file.getInputStream());
 		} catch (IOException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 					"Exception on the document processing. Can't continue with provided document", e);

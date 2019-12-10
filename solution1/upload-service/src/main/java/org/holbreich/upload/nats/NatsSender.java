@@ -2,11 +2,15 @@ package org.holbreich.upload.nats;
 
 import java.nio.charset.StandardCharsets;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class NatsSender {
 
+	private static final Logger LOG = LoggerFactory.getLogger(NatsSender.class);
+	
 	private NatsConnectionHandler connectionHandler;
 
 	public NatsSender(NatsConnectionHandler connectionHandler) {
@@ -14,9 +18,13 @@ public class NatsSender {
 		this.connectionHandler = connectionHandler;
 	}
 
-	public void sendMessage(String payload, String subject) throws Exception  {
+	public void sendMessage(String payload, String subject) {
 		if(payload!=null && !payload.isEmpty()) {
-			connectionHandler.getConnection().publish(subject,getBody(payload));
+			try {
+				connectionHandler.getConnection().publish(subject,getBody(payload));
+			} catch (Exception e) {
+				LOG.error("Publishing to NATS server failed",e);
+			}
 		}
 	}
 

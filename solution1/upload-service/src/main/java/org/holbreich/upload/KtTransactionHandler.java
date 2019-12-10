@@ -1,6 +1,13 @@
 package org.holbreich.upload;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
+import org.holbreich.upload.nats.NatsConfig;
 import org.holbreich.upload.nats.NatsSender;
+import org.simpleflatmapper.csv.CsvParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
@@ -8,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 /**
  * KtTransactionHandler is responsible for the management of the Transaction.
- * This implementation simply puts the Transaction to the Messaging Middlware.  
+ * Current implementation simply puts the Transaction to the Messaging
+ * Middleware.
+ * 
  * @author aho
  *
  */
@@ -16,36 +25,38 @@ import org.springframework.stereotype.Service;
 public class KtTransactionHandler {
 
 	private static final Logger LOG = LoggerFactory.getLogger(KtTransactionHandler.class);
-	public static final String TOPIC = "transactions";
 
 	private ConversionService conversionService;
 	private NatsSender sender;
+	private NatsConfig config;
 
-	private long counter = 0;
-
-
-	public KtTransactionHandler(ConversionService conversionService, NatsSender sender) {
+	public KtTransactionHandler(ConversionService conversionService, NatsSender sender, NatsConfig config) {
 		super();
 		this.conversionService = conversionService;
 		this.sender = sender;
+		this.config = config;
 	}
 
 	/**
+	 * Business Logic for the handling of single Transaction
 	 * 
 	 * @param transaction
 	 * @throws Exception
 	 */
-	public void handleSingleTransaction(KtTransaction transaction) throws Exception {
-		sender.sendMessage(conversionService.convert(transaction, String.class), TOPIC);
-		countAndLog();
+	public void handleSingleTransaction(KtTransaction transaction) {
+		sender.sendMessage(conversionService.convert(transaction, String.class), config.getTopicName());
 	}
 
-	// Not required of course, just included to see some life in logs of this service.
-	private void countAndLog() {
-		counter++;
-		if (counter % 1000 == 0) {
-			
-			LOG.info("Transactions processed {}", counter);
-		}
+	/**
+	 * Parses CSV InputStream into Transaction Objects and handles them individually
+	 * 
+	 * @param inputStream
+	 * @throws IOException
+	 */
+	public void parseAndHandleAllTransactions(InputStream inputStream) throws IOException {
+		LOG.debug("Start processing new transactions");
+		Reader reader = new InputStreamReader(inputStream);
+		CsvParser.mapTo(KtTransaction.class).forEach(reader, t -> handleSingleTransaction(t));
 	}
+
 }

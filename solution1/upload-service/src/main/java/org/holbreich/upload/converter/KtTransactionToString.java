@@ -8,6 +8,12 @@ import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ * Converts transaction to String.
+ * Conversion logic is captured here.
+ * @ConfigurationPropertiesBinding is used here as 'springy' way to minimize boilerplate for Converter registration.
+ * @author aho
+ */
 @Component
 @ConfigurationPropertiesBinding
 public class KtTransactionToString implements Converter<KtTransaction, String> {
