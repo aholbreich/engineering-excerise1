@@ -2,6 +2,10 @@ package org.holbreich.upload;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.tomcat.util.buf.UDecoder;
 import org.holbreich.upload.nats.NatsConfig;
 import org.holbreich.upload.nats.NatsSender;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,8 +54,9 @@ class KtTransactionHandlerTest {
 	}
 
 	@Test
-	void testParseAndHandleAllTransactions() {
-		fail("Not yet implemented");
+	void testParseAndHandleAllTransactions() throws IOException {
+		 InputStream resourceAsStream = this.getClass().getResourceAsStream("/statements5.csv");
+		 underTest.parseAndHandleAllTransactions(resourceAsStream);
 	}
 
 }
