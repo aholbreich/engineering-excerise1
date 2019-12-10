@@ -55,8 +55,8 @@ class KtTransactionHandlerTest {
 
 	@Test
 	void testParseAndHandleAllTransactions() throws IOException {
-		 InputStream resourceAsStream = this.getClass().getResourceAsStream("/statements5.csv");
-		 underTest.parseAndHandleAllTransactions(resourceAsStream);
+	
+		 underTest.parseAndHandleAllTransactions(this.getClass().getResourceAsStream("/statements5.csv"));
 	}
 
 }
