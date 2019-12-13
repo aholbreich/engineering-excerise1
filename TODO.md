@@ -1,7 +1,5 @@
 # 
-* Improve behaviour on not running NATS.
-* Review Tests Upload service
-* Write Test Aler Service
+* Write Test Alert Service
 * Review Documentation both
 * Dockerise to image
 * Start everything as swarm config
