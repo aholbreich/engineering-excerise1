@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import io.nats.client.Connection;
+
 @Service
 public class NatsSender {
 
@@ -21,7 +23,13 @@ public class NatsSender {
 	public void sendMessage(String payload, String subject) {
 		if(payload!=null && !payload.isEmpty()) {
 			try {
-				connectionHandler.getConnection().publish(subject,getBody(payload));
+				Connection connection = connectionHandler.getConnection();
+				if(connection!=null) {
+					connection.publish(subject,getBody(payload));
+				}
+				else {
+					LOG.error("Cannot publish to not connected Middleware");
+				}
 			} catch (Exception e) {
 				LOG.error("Publishing to NATS server failed",e);
 			}

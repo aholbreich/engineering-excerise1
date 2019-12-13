@@ -1,6 +1,5 @@
 package org.holbreich.upload.nats;
 
-import java.io.IOException;
 import java.time.Duration;
 import java.util.concurrent.TimeoutException;
 
@@ -21,7 +20,12 @@ public class NatsConnectionHandler {
 
 	private transient Connection connection;
 
-	protected synchronized Connection getConnection() throws Exception {
+	/**
+	 * Connection can be null. 
+	 * We tolerate this but it need to be handled by the client.
+	 * @return Connection or null 
+	 */
+	protected synchronized Connection getConnection() {
 		if (connection == null) {
 			connection = createConnection();
 		}
@@ -29,10 +33,15 @@ public class NatsConnectionHandler {
 	}
 
 	@PostConstruct
-	protected Connection createConnection() throws IOException, Exception {
-		final Connection newConnection = Nats.connect();
-		LOG.info("A NATS Connection {} has been created", newConnection);
-		return newConnection;
+	protected Connection createConnection() {
+		try {
+			final Connection newConnection = Nats.connect();
+			LOG.info("A NATS Connection {} has been created", newConnection);
+			return newConnection;
+		} catch (Exception e) {
+			LOG.error("Could not establish connection to NATS Server: {}", e);
+			return null;
+		}
 	}
 
 	@PreDestroy
