@@ -5,9 +5,11 @@ import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
 
 import io.nats.client.Dispatcher;
+import io.nats.client.MessageHandler;
 
 @Service
 public class NatsRegistrationService {
@@ -15,23 +17,32 @@ public class NatsRegistrationService {
 	private static final Logger LOG = LoggerFactory.getLogger(NatsRegistrationService.class);
 	public static final String TOPIC = "transactions";
 
-	private NatsConnectionHandler connectionHandler;
+	private final NatsConnectionHandler connectionHandler;
 
-	private KtTransactionMessageListener transactionHandler;
+	private final MessageHandler transactionHandler;
+
+	private final ConfigurableApplicationContext context;
 
 	private Dispatcher messageDispatcher;
 
 	public NatsRegistrationService(NatsConnectionHandler connectionHandler,
-			KtTransactionMessageListener transactionHandler) {
+			MessageHandler transactionHandler, ConfigurableApplicationContext appContext) {
 		this.connectionHandler = connectionHandler;
 		this.transactionHandler = transactionHandler;
+		this.context = appContext;
 	}
 
 	@PostConstruct
-	public void subscribe() throws Exception {
+	public void subscribe() {
 
 		if (messageDispatcher == null) {
-			this.messageDispatcher = createDispatcher();
+			try {
+				this.messageDispatcher = createDispatcher();
+			} catch (Exception e) {
+				LOG.error("Exception thrown on subscribing to NATS Middleware", e);
+				// Another strategy could be periodically reconnection logic.
+				context.close();
+			}
 		}
 		LOG.info("Subscribing to topic: {}", TOPIC);
 		messageDispatcher.subscribe(TOPIC);
