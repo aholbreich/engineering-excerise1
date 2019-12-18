@@ -1,0 +1,16 @@
+#Alterantive build
+#
+
+FROM maven:3.6-jdk-11 as build
+WORKDIR /app
+COPY /. /app 
+RUN mvn install
+
+# Creating runtime image
+FROM openjdk:11-jre
+WORKDIR /app
+VOLUME /tmp
+
+COPY --from=build /app/target/upload-*.jar /app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

@@ -38,15 +38,14 @@ public class NatsRegistrationService {
 		if (messageDispatcher == null) {
 			try {
 				this.messageDispatcher = createDispatcher();
+				LOG.info("Subscribing to topic: {}", TOPIC);
+				messageDispatcher.subscribe(TOPIC);
 			} catch (Exception e) {
 				LOG.error("Exception thrown on subscribing to NATS Middleware", e);
 				// Another strategy could be periodically reconnection logic.
 				context.close();
 			}
 		}
-		LOG.info("Subscribing to topic: {}", TOPIC);
-		messageDispatcher.subscribe(TOPIC);
-
 	}
 
 	private synchronized Dispatcher createDispatcher() throws Exception {

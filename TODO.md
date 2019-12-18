@@ -1,5 +1,4 @@
 # 
-* Write Test Alert Service
 * Review Documentation both
 * Dockerise to image
 * Start everything as swarm config

@@ -1,0 +1,21 @@
+version: '3'
+services:
+  nats-server:
+    image: nats
+    container_name: nats
+
+  upload-service:
+    build: 
+      context: ./upload-service/
+    image: upload-service:latest
+    ports:
+      - '8080:8080'
+    depends_on:
+      - nats-server
+  
+  alerting-service:
+    build: 
+      context: ./alerting-service/
+    image: alerting-service:latest
+    depends_on:
+      - nats-server
