@@ -3,6 +3,8 @@ services:
   nats-server:
     image: nats
     container_name: nats
+    ports:
+      - 4222:4222
 
   upload-service:
     build: 
@@ -10,12 +12,16 @@ services:
     image: upload-service:latest
     ports:
       - '8080:8080'
-    depends_on:
+    links:
       - nats-server
+    environment:
+      - "NATS_URL=nats://nats:4222"
   
   alerting-service:
     build: 
       context: ./alerting-service/
     image: alerting-service:latest
-    depends_on:
+    links:
       - nats-server
+    environment:
+      - "NATS_URL=nats://nats:4222"

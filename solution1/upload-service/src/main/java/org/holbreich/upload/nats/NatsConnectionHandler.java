@@ -19,6 +19,14 @@ public class NatsConnectionHandler {
 	private static final Logger LOG = LoggerFactory.getLogger(NatsConnectionHandler.class);
 
 	private transient Connection connection;
+	
+	private NatsConfig config;
+	
+
+	public NatsConnectionHandler(NatsConfig config) {
+		super();
+		this.config = config;
+	}
 
 	/**
 	 * Connection can be null. 
@@ -35,7 +43,8 @@ public class NatsConnectionHandler {
 	@PostConstruct
 	protected Connection createConnection() {
 		try {
-			final Connection newConnection = Nats.connect();
+			LOG.info("Connectiong to NATS via {}", config.getUrl());
+			final Connection newConnection = Nats.connect(config.getUrl());
 			LOG.info("A NATS Connection {} has been created", newConnection);
 			return newConnection;
 		} catch (Exception e) {

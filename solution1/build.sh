@@ -7,3 +7,4 @@ mvn -f ./alerting-service/ clean install
 
 echo "Building Upload Service"
 mvn -f ./upload-service/ clean install
+
