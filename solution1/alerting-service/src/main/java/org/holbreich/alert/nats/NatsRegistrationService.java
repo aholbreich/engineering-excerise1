@@ -12,6 +12,12 @@ import io.nats.client.Connection;
 import io.nats.client.Dispatcher;
 import io.nats.client.MessageHandler;
 
+/**
+ * This Service handles the subscription for messages from NATS Middleware.
+ * 
+ * @author aho
+ *
+ */
 @Service
 public class NatsRegistrationService {
 

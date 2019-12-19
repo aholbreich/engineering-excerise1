@@ -1,6 +1,6 @@
 #/bin/bash
 #
-# See Reamde.md for prerequites
+# See Readme.md for prerequites
 
 echo "Building Alerting Service"
 mvn -f ./alerting-service/ clean install

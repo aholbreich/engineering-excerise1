@@ -3,17 +3,17 @@
 [Upload Service] --> [NATS Server] --> [Alerting Service]
 
 ## Prerequsites
-Targes system should have
+
 * Java 11 or newer.
-* Apache maven for convinience
-* Docker 
-* and latest Docker compose (https://docs.docker.com/compose/install/
+* Apache maven (worked with 3.5.x)
+* Docker (worked with 19.03)
+* and Docker compose (https://docs.docker.com/compose/install/
 
 ## How to use
 On the first start use 
 
 ## Working Dir
-The description of build steps assumes current working directory (solution1)
+The description of build steps assumes current working directory (/solution1)
 
 ### Buils
 The very first action is to buid everything. 
@@ -22,7 +22,7 @@ The very first action is to buid everything.
 build.sh
 
 ```
-When Prerequsites matched it will compile/tes two projects (upload-service and alert-service) and produece dockerfiles
+When prerequsites are matched it will compile two projects (upload-service and alert-service) and produce docker images.
 ### Run localy
 
 To run 3 Component docker-compose configuration is used.
@@ -35,8 +35,10 @@ will start all 3 services.
 
 ### Testing 
 
-Having runnig services, files can be uploaded with cURL like:
+Having runnig services files can be uploaded with cURL command like:
 ```
-curl --form file=@statements3.csv http://localhost:8080/upload
+# assuming statements file in the current directory
+curl --form file=@statements.csv http://localhost:8080/upload
 ```
+Logs of the servives can be checked with `docker logs` or `docker-compose logs` see documentation
 

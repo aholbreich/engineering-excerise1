@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 import io.nats.client.Message;
 import io.nats.client.MessageHandler;
 
+/**
+ * Analyzer contains the business logic of the Alerting Service.
+ * It gets message if it's received from Messaging Middleware and apply the analyze. 
+ * @author aho
+ *
+ */
 @Service
 public class TransactionAnalyzer implements MessageHandler {
 

@@ -48,7 +48,7 @@ public class NatsConnectionHandler {
 			LOG.info("A NATS Connection {} has been created", newConnection);
 			return newConnection;
 		} catch (Exception e) {
-			LOG.error("Could not establish connection to NATS Server: {}", e);
+			LOG.error("Could not establish connection to NATS Server via {}, Error: {}", config.getUrl(), e.getMessage());
 			return null;
 		}
 	}

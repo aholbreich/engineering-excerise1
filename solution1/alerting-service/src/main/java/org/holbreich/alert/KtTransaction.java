@@ -1,7 +1,7 @@
 package org.holbreich.alert;
 
 /**
- * Kreditech fictitious Transaction.
+ * Kreditech imaginary Transaction.
  * 
  * @author aho
  */

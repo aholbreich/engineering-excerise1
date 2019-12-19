@@ -27,11 +27,6 @@ class KtTransactionToStringTest {
 		assertNotNull(converted);
 	}
 
-	@Test
-	void shouldConvertToJsonFormat() {
-
-	}
-
 	@Nested
 	class shouldConvertToJson {
 

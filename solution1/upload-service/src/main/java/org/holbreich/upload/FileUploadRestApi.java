@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * REST Controller and API for the Upload logic.
+ * @author aho
+ *
+ */
 @RestController
 @RequestMapping("/upload")
 public class FileUploadRestApi {

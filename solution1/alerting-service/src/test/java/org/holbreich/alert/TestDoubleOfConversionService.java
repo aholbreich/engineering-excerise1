@@ -20,6 +20,7 @@ public class TestDoubleOfConversionService implements ConversionService {
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T convert(Object source, Class<T> targetType) {
 		return (T) converter.convert((byte[]) source);

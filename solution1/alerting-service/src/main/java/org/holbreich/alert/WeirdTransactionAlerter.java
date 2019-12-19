@@ -1,7 +1,8 @@
 package org.holbreich.alert;
 
 /**
- * Alerter is reponsible for the alerting logic on the detection of "weired transaction".
+ * Alerter is responsible for the 'alerting logic'.
+ * Alerting happens when 'weired transactions' are detected.
  * 
  * @author aho
  *

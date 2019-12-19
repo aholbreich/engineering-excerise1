@@ -28,7 +28,6 @@ public class ByteArrayToKtTransaction implements Converter<byte[], KtTransaction
 	public KtTransaction convert(byte[] transactionMessageBytes) {
 
 		if (transactionMessageBytes != null) {
-
 			return gson.fromJson(new String(transactionMessageBytes, StandardCharsets.UTF_8), KtTransaction.class);
 		}
 		return null;

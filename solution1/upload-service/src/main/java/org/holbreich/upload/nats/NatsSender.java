@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 
 import io.nats.client.Connection;
 
+/**
+ * Component 
+ * @author aho
+ *
+ */
 @Service
 public class NatsSender {
 
