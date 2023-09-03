@@ -1,17 +1,12 @@
-## Technical Assignment
+Architecture playground 
+#### Requirements:
 
-### Goal
-
-Implement a software solution for the following use case:
-
-#### Business Requirements:
-
-1. Provide a REST API where user can upload a CSV file with bank statements. 
-Take in account that this file can be huge (hundred of MBs).
+1. Provide a REST API where the user can upload a CSV file with bank statements. 
+Take into account that this file can be huge (hundreds of MBs).
 Please check sample [payload](statements.csv).
 
 2. Provide an alert system that detects transactions over 10000 EUR. For this technical challenge purpose, 
-you can simply print the alert to console as:
+You can simply print the alert to the console as:
 
 * Input:
 
@@ -34,28 +29,14 @@ date: 2019-09-04
 
 #### Technical Requirements
 
-1. Solution should have separate services to implement each of business requirements.
-
-2. Solution should have a 3rd component that allows communication between the CSV reader service and the Alerting service.
-
-3. Also, this component should have the capability to integrate more consumers other than the Alerting system (check Image below). 
+1. The solution should have separate services to implement each of the business requirements.
+2. The solution should have a 3rd component that allows communication between the CSV reader service and the Alerting service.
+3. Also, this component should have the capability to integrate more consumers other than the Alerting system (check the Image below). 
 For example, maybe in the future another service will also consume the statements and persist them in a database. 
-
 4. All components should run on containers.
-
-5. Provide a mechanism for the solution be started and used on localhost.
-
+5. Provide a mechanism for the solution to be started and used on localhost.
 
 ![Text](tech-challenge.png "Technical solution")
 
 
-#### Evaluation
 
-The following will be taken into account when evaluating your solution:
-
-* Design choices.
-* Clean code and project structure.
-* Relevant test coverage for the solution.
-* Application performance when handling the request.
-
-Thank you very much for taking the time to work on this assignment. Have fun coding!
